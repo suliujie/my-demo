@@ -1,0 +1,7 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.slj.advice.ControllerAdvice,\
+com.slj.orm1.DBTemplateAutoConfiguration,\
+com.slj.advice.ControllerAdvice,\
+com.slj.advice.ControllerAdvice2
+
+

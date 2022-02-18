@@ -1,0 +1,19 @@
+server:
+  port: 9000
+spring:
+  application:
+    name: switch-order
+  profiles:
+    active: ${PROFILE:}
+  cloud:
+    nacos:
+      config:
+        namespace: ${CONFIG_NAMESPACE:}
+        server-addr: ${CONFIG_SERVER:localhost:8848}
+        file-extension: yaml
+      discovery:
+        server-addr: ${spring.cloud.nacos.config.server-addr}
+        namespace: ${spring.cloud.nacos.config.namespace}
+dubbo:
+  registry:
+    address: nacos://${spring.cloud.nacos.config.server-addr}

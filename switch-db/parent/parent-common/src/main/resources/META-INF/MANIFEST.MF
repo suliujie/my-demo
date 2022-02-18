@@ -1,0 +1,3 @@
+Library-Name: switch-common
+Library-Description: BeeX 组件类库
+

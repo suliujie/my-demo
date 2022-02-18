@@ -1,0 +1,58 @@
+
+server:
+  port: 8083
+spring:
+  application:
+    name: order
+  rabbitmq:
+    host: ${MQ_HOST:192.168.8.248}
+    port: ${MQ_PORT:5672}
+    username: ${MQ_USERNAME:admin}
+    password: ${MQ_PASSWORD:admin}
+    listener:
+      simple:
+        acknowledge-mode: auto
+  datasource:
+    url: jdbc:mysql://192.168.8.246:3306/order?autocommit=false&rewriteBatchedStatements=true&autoReconnect=true&poolPreparedStatements=true&useSSL=false&useUnicode=true&characterEncoding=UTF8&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: root
+    password: Dev9527`
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    #�������ӳصĲ�������,Ӧ�õ��������е�����Դ��
+    #��ʼ����С,��С,���
+    initial-size: 5
+    min-idle: 5
+    max-active: 20
+    #���û�ȡ���ӳصȴ���ʱ��ʱ��max-wait
+    max-wait: 60000
+    #���ü����òŽ���һ�μ��,�����Ҫ�رյĿ�������,��λ����
+    time-between-eviction-runs-millis: 60000
+    #����һ�����ڳ�����С�����ʱ��,��λ�Ǻ���
+    min-evictable-idle-time-millis: 300000
+    validation-query: select 1 from dual
+    test-while-idle: true
+    test-on-borrow: false
+    test-on-return: false
+    #��PSCache,����ָ��ÿ��������PSCache�Ĵ�С
+    poolPreparedStatements: true
+    max-pool-prepared-statement-per-connection-size: 20
+    #���ü��ͳ�����ص�filters,ȥ�����ؽ���sql�޷�ͳ��,'wall'���ڷ���ǽ
+    filters: stat,wall,log4j
+    #ͨ��connectProperties��������mergeSql����;��SQL��¼
+    connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+    #�ϲ����DruidDataSource�ļ������
+    use-global-data-source-stat: true
+
+
+dubbo:
+  protocol:
+    name: dubbo
+    port: -1
+  provider:
+    version: 1.0.0
+    timeout: 10000
+  consumer:
+    version: 1.0.0
+    check: false
+
+
