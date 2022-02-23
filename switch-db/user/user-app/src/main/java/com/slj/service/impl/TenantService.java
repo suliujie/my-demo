@@ -252,6 +252,8 @@ public class TenantService extends BaseService {
 
     logger.info("fjaskjdjds");
     logger.info("测试分支合并2");
+    logger.info("1");
+    logger.info("4");
     //body.setTenant("tenant3user");
     //tt.setJdbcPassword(body.getJdbcPassword());
     tt.setJdbcPassword(body.getJdbcPassword());
