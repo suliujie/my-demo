@@ -1,9 +1,9 @@
 
 server:
-  port: 8081
+  port: 8082
 spring:
   application:
-    name: user
+    name: test
   rabbitmq:
     host: ${MQ_HOST:192.168.8.248}
     port: ${MQ_PORT:5672}
@@ -18,33 +18,30 @@ spring:
     password: Dev9527`
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
-    # 初始化大小 默认为0
+    #�������ӳصĲ�������,Ӧ�õ��������е�����Դ��
+    #��ʼ����С,��С,���
     initial-size: 5
     min-idle: 5
-    # 最大连接数：  默认为8
     max-active: 20
-    #获取连接时最大等待时间   程序向连接池中请求连接时,超过maxWait的值后，认为本次请求失败，即连接池没有可用连接，单位毫秒，设置-1时表示无限等待
+    #���û�ȡ���ӳصȴ���ʱ��ʱ��max-wait
     max-wait: 60000
+    #���ü����òŽ���һ�μ��,�����Ҫ�رյĿ�������,��λ����
     time-between-eviction-runs-millis: 60000
+    #����һ�����ڳ�����С�����ʱ��,��λ�Ǻ���
     min-evictable-idle-time-millis: 300000
     validation-query: select 1 from dual
     test-while-idle: true
     test-on-borrow: false
     test-on-return: false
+    #��PSCache,����ָ��ÿ��������PSCache�Ĵ�С
     poolPreparedStatements: true
     max-pool-prepared-statement-per-connection-size: 20
+    #���ü��ͳ�����ص�filters,ȥ�����ؽ���sql�޷�ͳ��,'wall'���ڷ���ǽ
     filters: stat,wall,log4j
+    #ͨ��connectProperties��������mergeSql����;��SQL��¼
     connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+    #�ϲ����DruidDataSource�ļ������
     use-global-data-source-stat: true
-    druid:
-      remove-abandoned-timeout: 30
-      max-wait: 100000
-      # 连接空闲时间大于该值并且池中空闲连接大于minIdle则关闭该连接
-      min-evictable-idle-time-millis: 100000
-      # 连接空闲时间大于该值，不管minIdle都关闭该连接
-      time-between-connect-error-millis: 100000
-      initial-size:
-
 
 
 dubbo:
@@ -57,5 +54,3 @@ dubbo:
   consumer:
     version: 1.0.0
     check: false
-
-

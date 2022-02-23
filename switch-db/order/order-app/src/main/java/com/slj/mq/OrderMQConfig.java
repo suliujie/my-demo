@@ -139,4 +139,13 @@ public class OrderMQConfig {
     return BindingBuilder.bind(userOrderUpdateQueue).to(exchange).with(MQConstant.TEST_USER_ORDER_UPDATE_ROUTING_KEY).noargs();
   }
 
+  @Bean
+  public Queue utenantAddQue(){
+    return new Queue(MQConstant.O_TENANT_ADD_QUEUE,true);
+  }
+  @Bean
+  public Binding tenantAddBind(Queue utenantAddQue, Exchange exchange){
+    return BindingBuilder.bind(utenantAddQue).to(exchange).with(MQConstant.TENANT_ADD_ROUTING_KEY).noargs();
+  }
+
 }

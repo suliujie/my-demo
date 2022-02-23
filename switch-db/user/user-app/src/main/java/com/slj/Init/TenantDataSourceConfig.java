@@ -97,6 +97,36 @@ public class TenantDataSourceConfig implements CommandLineRunner {
       ds.setUrl(tenant.getJdbcUrl());
       ds.setUsername(tenant.getJdbcUser());
       ds.setPassword(tenant.getJdbcPassword());
+      ds.setRemoveAbandoned(true);
+      ds.setRemoveAbandonedTimeout(10);
+
+      // 池中某个连接的空闲时长达到 N 毫秒后, 连接池在下次检查空闲连接时，将回收该连接,要小于防火墙超时设置
+      ds.setMinEvictableIdleTimeMillis(40000);
+
+      // 程序没有close连接且空闲时长超过minEvictableIdleTimeMillis,则会执validationQuery指定的SQL,以保证该程序连接不会池kill掉,其范围不超过minIdle指定的连接个数
+      // ds.setKeepAlive();
+
+      // 回收空闲连接时，将保证至少有minIdle个连接
+      // ds.setMinIdle();
+
+      // 要求程序从池中get到连接后, N 秒后必须close,否则druid 会强制回收该连接,不管该连接中是活动还是空闲, 以防止进程不会进行close而霸占连接;	false,当发现程序有未连接,不管该连接中是活动还是空闲, 以防止进程不会进行close而霸占连接。
+     //ds.setRemoveAbandoned();
+
+      //设置druid 强制回收连接的时限，当程序从池中get到连接开始算起，超过此值后，druid将强制回收该连接，单位秒。
+      //ds.setRemoveAbandonedTimeout();
+
+      //当程序请求连接，池在分配连接时，是否先检查该连接是否有效
+      //ds.setTestWhileIdle();
+      // 检查空闲连接的频率，单位毫秒, 非正整数时表示不进行检查
+      ds.setTimeBetweenConnectErrorMillis(40000);
+      ds.setMaxWait(300000);
+      ds.setRemoveAbandoned(false);
+      ds.setTestWhileIdle(false);
+      ds.setLoginTimeout(30);
+      //每个连接最多缓存多少个SQL
+      ds.setMaxPoolPreparedStatementPerConnectionSize(20);
+      //检查池中的连接是否仍可用的 SQL 语句,drui会连接到数据库执行该SQL如果正常返回，则表示连接可用，否则表示连接不可用
+      //ds.setValidationQuery();
       customDataSources.put(tenant.getTenant(), ds);
       logger.info("已加载租户库数据源" + tenant.getTenant());
     }
@@ -118,7 +148,7 @@ public class TenantDataSourceConfig implements CommandLineRunner {
 //    return this.buildDbTemplate(dataSource, SpringConnFactory.class);
 //  }
 //
-  private DBTemplate buildDbTemplate(
+  public DBTemplate buildDbTemplate(
       DataSource dataSource, Class<? extends ConnFactory> connectionFactory) {
 
     return new DBTemplate.Builder()

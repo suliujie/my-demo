@@ -9,18 +9,17 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @EnableDubbo
 @EnableDiscoveryClient
-//@EnableTransactionManagement
 @SpringBootApplication(scanBasePackages = "com.slj",exclude = {DataSourceAutoConfiguration.class})
 @EnableScheduling
-public class UserApplication {
+public class TestApplication {
 
   public static void main(String[] args) {
-    SpringApplication.run(UserApplication.class, args);
-  }
+    SpringApplication.run(TestApplication.class, args);
+
+    }
 
   @Bean
   public TaskScheduler taskScheduler() {
@@ -28,4 +27,5 @@ public class UserApplication {
     taskExecutor.setPoolSize(50);
     return taskExecutor;
   }
+
 }

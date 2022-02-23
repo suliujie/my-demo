@@ -125,6 +125,7 @@ public class ControllerAdvice {
     // 获取json最外层字符串
     //Object timeStamp = jsonObject.get("timeStamp");
     DynamicDataSourceContextHolder.setDataSource(bb+appName);
+    RequestHeaderHolder.setDataSourceId(bb+appName);
   }
 
 //  @Pointcut("@within(org.springframework.stereotype.Repository)")

@@ -1,7 +1,5 @@
 package com.slj.mq;
 import com.slj.OrderDTO;
-import com.slj.UserDTO;
-import com.slj.UserService;
 import com.slj.advice.RequestHeaderHolder;
 import com.slj.business.OrderService;
 import com.slj.switchdb.tenant.DynamicDataSourceContextHolder;
@@ -9,6 +7,9 @@ import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import slj.TenantDTO;
+import slj.UserDTO;
+import slj.UserService;
 
 /**
  * @author liufuhong
@@ -127,14 +128,18 @@ public class OrderMQHandler {
     orderService.update(orderDTO);
 
     //userService.update(userDTO);
-    UserDTO userDTO=new UserDTO();
+    UserDTO userDTO =new UserDTO();
     userDTO.setAge(orderDTO.getAge());
     userDTO.setUserName(orderDTO.getUserName());
     userDTO.setDataSourceId(orderDTO.getDataSourceId());
     RequestHeaderHolder.setDataSourceId(orderDTO.getDataSourceId()+"user");
-    DynamicDataSourceContextHolder.setDataSource(orderDTO.getDataSourceId()+"user");
+    //DynamicDataSourceContextHolder.setDataSource(orderDTO.getDataSourceId());
     userService.update(userDTO);
     //orderService.update(orderDTO);
   }
 
+  @RabbitListener(queues = MQConstant.O_TENANT_ADD_QUEUE)
+  public void  addTenant(TenantDTO tenantDTO){
+
+  }
 }

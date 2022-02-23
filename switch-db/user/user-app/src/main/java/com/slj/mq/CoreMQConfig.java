@@ -4,6 +4,7 @@ import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Exchange;
 import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.TopicExchange;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -14,6 +15,11 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class CoreMQConfig {
+
+//  @Bean
+//  public Exchange exchange() {
+//    return new TopicExchange(ex);
+//  }
 
 //  @Bean
 //  public Queue siBoxConfirmQueue() {
@@ -128,6 +134,33 @@ public class CoreMQConfig {
   @Bean
   public Binding userUpdateBinding(Queue userUpdateQueue, Exchange exchange){
     return BindingBuilder.bind(userUpdateQueue).to(exchange).with(MQConstant.TEST_USER_UPDATE_ROUTING_KEY).noargs();
+  }
+
+  @Bean
+  public Queue userQuertQueue(){
+    return new Queue(MQConstant.U_USER_QUERY_QUEUE,true);
+  }
+  @Bean
+  public Binding userQueryBinding(Queue userQuertQueue, Exchange exchange){
+    return BindingBuilder.bind(userQuertQueue).to(exchange).with(MQConstant.TEST_USER_QUERY_ROUTING_KEY).noargs();
+  }
+
+  @Bean
+  public Queue tenantAddQue(){
+    return new Queue(MQConstant.U_TENANT_ADD_QUEUE,true);
+  }
+  @Bean
+  public Binding tenantAddBind(Queue tenantAddQue, Exchange exchange){
+    return BindingBuilder.bind(tenantAddQue).to(exchange).with(MQConstant.TENANT_ADD_ROUTING_KEY).noargs();
+  }
+
+  @Bean
+  public Queue tenantUpdateQue(){
+    return new Queue(MQConstant.U_TENANT_UPDATE_QUEUE,true);
+  }
+  @Bean
+  public Binding tenantUpdateBind(Queue tenantUpdateQue, Exchange exchange){
+    return BindingBuilder.bind(tenantUpdateQue).to(exchange).with(MQConstant.TENANT_UPDATE_ROUTING_KEY).noargs();
   }
 
 //  @Bean

@@ -2,6 +2,8 @@ package com.slj.service.impl;
 
 
 import com.alibaba.druid.pool.DruidDataSource;
+import com.slj.advice.RequestHeaderHolder;
+import com.slj.mq.MQConstant;
 import com.slj.persistence.UserRepository;
 import com.slj.pojo.Tenant;
 import com.slj.pojo.User;
@@ -9,11 +11,16 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.Resource;
 import javax.sql.DataSource;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.core.RabbitAdmin;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import slj.TenantDTO;
@@ -35,6 +42,12 @@ import work.myfavs.framework.orm.meta.handler.impls.StringPropertyHandler;
 @Service
 @DubboService
 public class UserServiceImpl implements UserService {
+
+  @Autowired
+  private ConnectionFactory connectionFactory;
+  @Autowired
+  private RabbitTemplate template;
+  private final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
     //private final Dbdd dbdd;
 
@@ -59,7 +72,7 @@ public class UserServiceImpl implements UserService {
           userDTO.setAge(user.getAge());
           userDTOS.add(userDTO);
         }
-        log.info(users.toString());
+        log.info("http方式切换数据源"+users.toString());
         return userDTOS;
     }
 
@@ -128,5 +141,42 @@ public class UserServiceImpl implements UserService {
                     .register(int.class, new IntegerPropertyHandler(true))
                     .register(Date.class, new DatePropertyHandler()))
         .build();
+  }
+
+  public void testMq() {
+//    Map<String, DynamicConsumer> allQueueContainerMap = customizeDynamicConsumerContainer.customizeDynamicConsumerContainer;
+//    DynamicConsumer              consumer             = null;
+//    try {
+//      //建立消费者
+//      consumer = ConsumerGenerate
+//          .genConsumer(connectionFactory, rabbitAdmin, RequestHeaderHolder.getDataSourceId(), "test001", "routingKey001"
+//              , false, true, true);
+//    } catch (Exception e) {
+//      logger.error("系统异常",e);
+//    }
+//    allQueueContainerMap.put("test001", consumer);
+//    //启动消费者
+//    consumer.start();
+//    UserDTO dto=new UserDTO();
+//    dto.setDataSourceId("tenant2");//发送消息到交换机
+//    amqpProducer.publishMsg(RequestHeaderHolder.getDataSourceId(), "routingKey001", dto);
+  }
+
+  public void testMq2() throws Exception {
+//      UserDTO userDTO=new UserDTO();
+//      userDTO.setDataSourceId(RequestHeaderHolder.getDataSourceId());
+//    MQContainerFactory fac =
+//        MQContainerFactory.builder()
+//            .topicExchange(userDTO.getDataSourceId())
+//            .queue(MQConstant.U_USER_QUERY_QUEUE)
+//            .autoDeleted(false)
+//            .autoAck(true)
+//            .durable(true)
+//            .routingKey(MQConstant.TEST_USER_QUERY_ROUTING_KEY)
+//            .rabbitAdmin(rabbitAdmin)
+//            .connectionFactory(connectionFactory)
+//            .build();
+//    fac.getObject();
+//    template.convertAndSend(userDTO.getDataSourceId(), MQConstant.TEST_USER_QUERY_ROUTING_KEY, userDTO);
   }
 }

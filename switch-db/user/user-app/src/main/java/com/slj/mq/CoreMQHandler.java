@@ -1,8 +1,11 @@
 package com.slj.mq;
+import com.slj.advice.RequestHeaderHolder;
+import com.slj.service.impl.TenantService;
 import com.slj.service.impl.UserServiceImpl;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import slj.TenantDTO;
 import slj.UserDTO;
 
 /**
@@ -15,6 +18,8 @@ public class CoreMQHandler {
 
   @Autowired
   private UserServiceImpl userService;
+  @Autowired
+  private TenantService tenantService;
 //  private final RFIDService rfidService;
 //  private final OrderSyncTaskService orderSyncTaskService;
 //
@@ -112,6 +117,27 @@ public class CoreMQHandler {
   @RabbitListener(queues = MQConstant.U_USER_UPDATE_QUEUE)
   public void handle(UserDTO userDTO){
     userService.update(userDTO);
+  }
+
+  @RabbitListener(queues = MQConstant.U_USER_QUERY_QUEUE)
+  public void handle2(UserDTO userDTO){
+
+    userService.queryUserInfo();
+    //userService.update(userDTO);
+  }
+
+  @RabbitListener(queues = MQConstant.U_TENANT_ADD_QUEUE)
+  public void addTenant(TenantDTO tenantDTO) throws Exception {
+    //tenantDTO.setTenant(tenantDTO.getTenant()+"user");
+    tenantService.addTenant(tenantDTO);
+
+  }
+
+  @RabbitListener(queues = MQConstant.U_TENANT_UPDATE_QUEUE)
+  public void updateTenant(TenantDTO tenantDTO) throws Exception {
+    //tenantDTO.setTenant(tenantDTO.getTenant()+"user");
+    tenantService.updateTenant(tenantDTO);
+
   }
 
 //  @RabbitListener(queues = MQConstant.U_O_USER_UPDATE_QUEUE)

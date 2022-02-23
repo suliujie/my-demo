@@ -11,6 +11,7 @@
   <modules>
     <module>parent-base</module>
     <module>parent-common</module>
+    <module>../test</module>
   </modules>
 
 

@@ -68,8 +68,19 @@ public interface MQConstant {
   String U_USER_UPDATE_QUEUE="u.user.update.q";
   String TEST_USER_UPDATE_ROUTING_KEY="user.update";
 
+  String U_USER_QUERY_QUEUE="u.user.list.q";
+  String TEST_USER_QUERY_ROUTING_KEY="user.query";
+
   String U_O_USER_UPDATE_QUEUE="u.o.user.update.q";
   String TEST_USER_ORDER_UPDATE_ROUTING_KEY="user.order.update";
+
+  String U_TENANT_ADD_QUEUE="u.tenant.add.q";
+  String O_TENANT_ADD_QUEUE="o.tenant.add.q";
+  String TENANT_ADD_ROUTING_KEY="tenant.add";
+
+  String U_TENANT_UPDATE_QUEUE="u.tenant.update.q";
+  String O_TENANT_UPDATE_QUEUE="o.tenant.update.q";
+  String TENANT_UPDATE_ROUTING_KEY="tenant.update";
 
 
 }

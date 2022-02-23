@@ -1,8 +1,6 @@
 package com.slj.Init;
 
 import com.alibaba.druid.pool.DruidDataSource;
-import com.slj.TenantDTO;
-import com.slj.UserService;
 import com.slj.switchdb.config.DynamicDataSource;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
+import slj.TenantDTO;
+import slj.UserService;
 
 
 @Configuration
@@ -22,9 +22,9 @@ public class TenantDataSourceConfiga implements CommandLineRunner {
   @Resource(name = "dynamicDataSource")
   private DynamicDataSource dynamicDataSource;
   @Resource(name = "primaryDataSource")
-  private DruidDataSource druidDataSource;
+  private DruidDataSource   druidDataSource;
   @DubboReference
-  private UserService userService;
+  private UserService       userService;
 
 //  @Bean(name = "primaryDataSource", initMethod = "init", destroyMethod = "close")
 //  @ConfigurationProperties("spring.datasource.primary")

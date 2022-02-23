@@ -1,2 +1,2 @@
-ConsumerContextFilter=com.ConsumerFilter
-ContextFilter=com.ProviderFilter
+ConsumerFilter=com.slj.filter.ConsumerFilter
+ProviderFilter=com.slj.filter.ProviderFilter

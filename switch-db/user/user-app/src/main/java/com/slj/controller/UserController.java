@@ -24,11 +24,28 @@ public class UserController {
     private UserServiceImpl userService;
 
     @GetMapping("/test")
-    public String test() throws Exception {
+    public void test() throws Exception {
         //List<User> users=userService.queryUserInfo();
        // LOG.info("结果:{}",users);
         userService.queryUserInfo();
-        return "OK";
+        //return null;
     }
+
+    @GetMapping("/test-mq")
+    public void testMq() throws Exception {
+        //List<User> users=userService.queryUserInfo();
+        // LOG.info("结果:{}",users);
+        userService.testMq();
+        //return null;
+    }
+
+    @GetMapping("/test-mq2")
+    public void testMq2() throws Exception {
+        //List<User> users=userService.queryUserInfo();
+        // LOG.info("结果:{}",users);
+        userService.testMq2();
+        //return null;
+    }
+
 
 }
