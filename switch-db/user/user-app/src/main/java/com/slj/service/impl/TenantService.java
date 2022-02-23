@@ -249,6 +249,9 @@ public class TenantService extends BaseService {
     tenantDTO.setJdbcClass(body.getJdbcClass());
     tenantDTO.setId(body.getId());
     Tenant tt=tenantRepository.getById(body.getId());
+
+    logger.info("fjaskjdjds");
+    logger.info("测试分支合并2");
     //body.setTenant("tenant3user");
     //tt.setJdbcPassword(body.getJdbcPassword());
     tt.setJdbcPassword(body.getJdbcPassword());
