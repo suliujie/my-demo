@@ -11,6 +11,19 @@
 
   <modules>
     <module>switch-db</module>
+    <module>springcloud-gateway-demo</module>
+    <module>maven-demo</module>
+    <module>git-demo</module>
+    <module>servlet-demo</module>
+    <module>Struts2-demo</module>
+    <module>mybatis-demo</module>
+    <module>hibernate-demo</module>
+    <module>spring-demo</module>
+    <module>ssm-demo</module>
+    <module>ssh-demo</module>
+    <module>web-demo</module>
+    <module>springboot-demo</module>
+    <module>springboot-rabbitmq-demo</module>
   </modules>
 <!--  <modules>-->
 <!--    <module>parent</module>-->
